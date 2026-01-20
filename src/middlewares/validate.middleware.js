@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
             }
         });
 
-        return res.status(400).json({ errors: uniqueErrors });
+        return res.status(400).json({ success: false, errors: uniqueErrors });
     }
     next();
 }

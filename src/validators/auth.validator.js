@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 
-exports.registerValidation = [
+module.exports.registerValidation = [
     body("name")
         .trim()
         .notEmpty().withMessage("Name is required")
@@ -20,3 +20,17 @@ exports.registerValidation = [
         .isLength({ min: 1 }).withMessage("Password must be at least 1 chacter")
 
 ];
+
+module.exports.loginValidation = [
+    body("email")
+        .trim()
+        .notEmpty().withMessage("Email should enter")
+        .bail()
+        .isEmail().withMessage("Invalid email"),
+
+    body("password")
+        .trim()
+        .notEmpty().withMessage("Password should enter")
+        .bail()
+        .isLength({ min: 3 }).withMessage("Password must be at least 3 chacter")
+]

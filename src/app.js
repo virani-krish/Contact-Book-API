@@ -6,6 +6,7 @@ const app = express();
 // routes file import
 const authRoute = require("./routes/auth.route");
 const userRoute = require("./routes/user.route");
+const contactRoute = require("./routes/contact.route");
 
 // globle middelware
 app.use(express.json());
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 // all routes
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
+app.use("/contact", contactRoute);
 
 // globle error handler
 app.use((err, req, res, next) => {

@@ -67,3 +67,30 @@ module.exports.updateContact = (req, res, next) => {
     });
 
 }
+
+module.exports.deleteContact = (req, res, next) => {
+
+    const userId = req.user.id;
+    const { contactId } = req.params;
+
+    const deleteContactSQL = "DELETE FROM contacts WHERE id = ? AND user_id = ?";
+
+    db.query(deleteContactSQL, [contactId, userId], (err, result) => {
+
+        if (err) return next(err);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Contact not found"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Contact deleted successfully"
+        });
+
+    });
+
+}

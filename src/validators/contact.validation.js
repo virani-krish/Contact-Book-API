@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 
-module.exports.addContactValidation = [
+module.exports.contactValidation = [
     body("contactName")
         .trim()
         .notEmpty().withMessage("Contact name is required"),

@@ -9,7 +9,7 @@ module.exports.addContact = (req, res, next) => {
 
     db.query(addContactSQL, [contactName, contactNumber, userId], (err, result) => {
 
-        if(err) return next(err);
+        if (err) return next(err);
 
         return res.status(201).json({
             success: true,
@@ -28,12 +28,40 @@ module.exports.viewContact = (req, res, next) => {
 
     db.query(showContactSQL, [userId], (err, result) => {
 
-        if(err) return next(err);
+        if (err) return next(err);
 
         return res.status(200).json({
             success: true,
             message: "Contact data get successfully",
             result
+        });
+
+    });
+
+}
+
+module.exports.updateContact = (req, res, next) => {
+
+    const userId = req.user.id;
+    const { contactId } = req.params;
+    const { contactName, contactNumber } = req.body;
+
+    const updateContactSQL = "UPDATE contacts set contact_name = ?, contact_number = ? WHERE id = ? AND user_id = ?";
+
+    db.query(updateContactSQL, [contactName, contactNumber, contactId, userId], (err, result) => {
+
+        if (err) return next(err);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Contact not found"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Contact updated successfully"
         });
 
     });
